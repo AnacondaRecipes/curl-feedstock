@@ -13,6 +13,7 @@ fi
 
 ./configure \
     --prefix=${PREFIX} \
+    --host=${HOST} \
     --disable-ldap \
     --with-ca-bundle=${PREFIX}/ssl/cacert.pem \
     --with-ssl=${PREFIX} \
@@ -24,3 +25,6 @@ fi
 make -j$CPU_COUNT
 make test -j$CPU_COUNT
 make install -j$CPU_COUNT
+
+# Includes man pages and other miscellaneous.
+rm -rf "${PREFIX}/share"
