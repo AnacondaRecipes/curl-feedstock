@@ -9,16 +9,16 @@ source:
   sha256: e5b1a92ed3b0c11f149886458fa063419500819f1610c020d62f25b8e4b16cfb
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
+    - {{ compiler('c') }}
     # python is a build requirement on Windows to resolve features.
     - pkg-config  # [unix]
     # perl is required to run the tests on UNIX.
     - perl             # [unix]
     - pkg-config       # [unix]
-    - {{ compiler('c') }}
   host:
     - openssl    # [unix]
     - libssh2
