@@ -5,10 +5,13 @@ export C_INCLUDE_PATH="${PREFIX}/include"
 
 if [ $(uname) == "Darwin" ]; then
     export DYLD_FALLBACK_LIBRARY_PATH="${PREFIX}/lib"
+<<<<<<< HEAD
     export CC=clang
     export CXX=clang++
 else
     export LDFLAGS="$LDFLAGS -Wl,--disable-new-dtags"
+=======
+>>>>>>> remove CC,CXX setting, simplify with cb3
 fi
 
 ./configure \
