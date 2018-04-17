@@ -3,13 +3,6 @@
 export PKG_CONFIG_PATH="${PREFIX}/lib/pkgconfig"
 export C_INCLUDE_PATH="${PREFIX}/include"
 
-<<<<<<< HEAD
-if [ $(uname) == "Darwin" ]; then
-    export DYLD_FALLBACK_LIBRARY_PATH="${PREFIX}/lib"
-fi
-
-=======
->>>>>>> split into libcurl and curl; 7.57.0 update
 ./configure \
     --prefix=${PREFIX} \
     --host=${HOST} \
