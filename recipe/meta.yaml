@@ -14,12 +14,13 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler("c") }}
     - make             # [unix]
     # perl is required to run the tests on UNIX.
     - perl             # [unix]
     - pkg-config       # [unix]
   host:
+    # uses winssl for windows, so no openssl there
     - openssl   # [unix]
     - zlib
     - libssh2
@@ -28,7 +29,7 @@ outputs:
   - name: libcurl
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler("c") }}
       host:
         - openssl   # [unix]
         - zlib
