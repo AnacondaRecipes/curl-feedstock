@@ -9,7 +9,7 @@ source:
   sha256: 9d52a4d80554f9b0d460ea2be5d7be99897a1a9f681ffafe739169afd6b4f224
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -41,6 +41,8 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
+      ignore_run_exports:  # [win]
+        - krb5             # [win]
     files:
       - include/curl             # [unix]
       - lib/libcurl*             # [unix]
@@ -57,6 +59,12 @@ outputs:
         - test ! -f ${PREFIX}/lib/libcurl.a          # [not win]
 
   - name: curl
+    build:
+      # to maintain backwards compatibility with curl packages..
+      ignore_run_exports:
+        - libssh2
+        - krb5
+        - zlib  # [ppc64le or win]
     files:
       - bin/curl               # [unix]
       - Library/bin/curl.exe   # [win]
