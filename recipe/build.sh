@@ -1,32 +1,20 @@
 #!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/libtool/build-aux/config.* .
 
-export PKG_CONFIG_PATH="${PREFIX}/lib/pkgconfig"
-export C_INCLUDE_PATH="${PREFIX}/include"
-
-# Legacy toolchain flags
-if [[ ${c_compiler} =~ .*toolchain.* ]]; then
-    if [ $(uname) == "Darwin" ]; then
-        export DYLD_FALLBACK_LIBRARY_PATH="${PREFIX}/lib"
-        export CC=clang
-        export CXX=clang++
-    else
-        export LDFLAGS="$LDFLAGS -Wl,--disable-new-dtags"
-    fi
-fi
-if [[ ${target_platform} != osx-64 ]]; then
-    export LDFLAGS="${LDFLAGS} -Wl,-rpath-link,$PREFIX/lib"
-fi
+# need macosx-version-min flags set in cflags and not cppflags
+export CFLAGS="$CFLAGS $CPPFLAGS"
 
 ./configure \
     --prefix=${PREFIX} \
     --host=${HOST} \
     --disable-ldap \
-    --disable-static \
     --with-ca-bundle=${PREFIX}/ssl/cacert.pem \
     --with-ssl=${PREFIX} \
     --with-zlib=${PREFIX} \
     --with-gssapi=${PREFIX} \
     --with-libssh2=${PREFIX} \
+    --with-nghttp2=${PREFIX} \
 || cat config.log
 
 make -j${CPU_COUNT} ${VERBOSE_AT}
