@@ -25,8 +25,6 @@ requirements:
     - libssh2
     - openssl        # [unix]
     - libnghttp2     # [unix]
-    - zlib
-
 
 outputs:
   - name: libcurl
@@ -73,7 +71,6 @@ outputs:
         - {{ compiler('c') }}
       host:
         - openssl   # [unix]
-        - zlib
         - libssh2
         - krb5
         - zlib  # [ppc64le or win]
