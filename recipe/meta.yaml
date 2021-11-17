@@ -1,4 +1,4 @@
-{% set version = "7.78.0" %}
+{% set version = "7.80.0" %}
 
 package:
   name: curl_split_recipe
@@ -6,7 +6,7 @@ package:
 
 source:
   url: http://curl.haxx.se/download/curl-{{ version }}.tar.bz2
-  sha256: 98530b317dc95ccb324bbe4f834f07bb642fbc393b794ddf3434f246a71ea44a
+  sha256:  dd0d150e49cd950aff35e16b628edf04927f0289df42883750cf952bb858189c
 
 build:
   number: 0
@@ -89,6 +89,11 @@ outputs:
     files:
       - bin/curl               # [unix]
       - Library/bin/curl.exe*   # [win]
+    build:
+      ignore_run_exports: 
+        - libssh2          # [linux or osx  or win]
+        - krb5             # [linux or osx or win]
+        - zlib             # [linux or win]
     requirements:
       build:
         - {{ compiler('c') }}
