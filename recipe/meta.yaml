@@ -90,6 +90,8 @@ outputs:
       - bin/curl               # [unix]
       - Library/bin/curl.exe*   # [win]
     build:
+      # 2021/11/17: curl 7.80.0 has "ERROR (curl): run-exports library package [libssh2|krb5|zlib] in requirements/run".
+      # To avoid this was used ignore_run_exports
       ignore_run_exports: 
         - libssh2          # [linux or osx  or win]
         - krb5             # [linux or osx or win]
