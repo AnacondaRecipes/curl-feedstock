@@ -89,24 +89,14 @@ outputs:
     files:
       - bin/curl               # [unix]
       - Library/bin/curl.exe*   # [win]
-    build:
-      # 2021/11/17: curl 7.80.0 has "ERROR (curl): run-exports library package [libssh2|krb5|zlib] in requirements/run".
-      # To avoid this was used ignore_run_exports
-      ignore_run_exports: 
-        - libssh2          # [linux or osx  or win]
-        - krb5             # [linux or osx or win]
-        - zlib             # [linux or win]
     requirements:
       build:
         - {{ compiler('c') }}
       host:
         - {{ pin_subpackage('libcurl', exact=True) }}
-        - zlib
-        - libssh2
-        - krb5
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
-        - libssh2
+
     test:
       commands:
         # curl help commands on Windows have non-zero status codes.  Need other test.
