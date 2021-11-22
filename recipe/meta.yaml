@@ -96,7 +96,7 @@ outputs:
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
-        - zlib  # [osx]
+        - zlib  # [osx or s390x]
 
     test:
       commands:
