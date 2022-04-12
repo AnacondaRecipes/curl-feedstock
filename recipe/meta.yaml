@@ -10,7 +10,6 @@ source:
 
 build:
   number: 0
-  # trigger 1
 
 requirements:
   build:
