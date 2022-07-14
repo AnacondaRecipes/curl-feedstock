@@ -9,7 +9,6 @@ export CFLAGS="$CFLAGS $CPPFLAGS"
     --prefix=${PREFIX} \
     --host=${HOST} \
     --disable-ldap \
-    --disable-manual \
     --with-ca-bundle=${PREFIX}/ssl/cacert.pem \
     --with-ssl=${PREFIX} \
     --with-zlib=${PREFIX} \
