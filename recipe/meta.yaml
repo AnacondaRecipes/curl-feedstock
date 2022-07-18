@@ -73,7 +73,7 @@ outputs:
         - openssl   # [unix]
         - libssh2
         - krb5
-        - zlib  # [ppc64le or win]
+        - zlib
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
@@ -94,8 +94,15 @@ outputs:
         - {{ compiler('c') }}
       host:
         - {{ pin_subpackage('libcurl', exact=True) }}
+        # OpenSSL is needed here to prevent conda-build from getting confused while
+        # both OpenSSL 1.1.1 and 3.0.0 and being supported
+        - openssl   # [unix]
+        - zlib
+        - libssh2
+        - krb5
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
+        - libssh2
 
     test:
       commands:
