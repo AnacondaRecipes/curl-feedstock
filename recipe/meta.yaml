@@ -7,6 +7,9 @@ package:
 source:
   url: https://curl.haxx.se/download/curl-{{ version }}.tar.bz2
   sha256: 702fb26e73190a3bd77071aa146f507b9817cc4dfce218d2ab87f00cd3bc059d
+  patches:               # [s390x]
+    - sched_s390x.patch  # [s390x]
+
 
 build:
   number: 0
@@ -20,6 +23,7 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl  # [unix]
     - pkg-config  # [unix]
+    - patch     # [s390x]
   host:
     - zlib
     - krb5
@@ -95,11 +99,8 @@ outputs:
         - {{ compiler('c') }}
       host:
         - {{ pin_subpackage('libcurl', exact=True) }}
-        # OpenSSL is needed here to prevent conda-build from getting confused while
-        # both OpenSSL 1.1.1 and 3.0.0 and being supported
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
-
 
     test:
       commands:
