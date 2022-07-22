@@ -10,7 +10,6 @@ source:
   patches:               # [s390x or ppc64le]
     - sched_s390x.patch  # [s390x or ppc64le]
 
-s
 build:
   number: 0
 
