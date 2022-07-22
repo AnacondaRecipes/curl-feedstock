@@ -22,7 +22,7 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl  # [unix]
     - pkg-config  # [unix]
-    - patch     # [s390x]
+    - patch     # [s390x or ppc64le]
   host:
     - zlib
     - krb5
