@@ -7,7 +7,7 @@ package:
 source:
   url: https://curl.haxx.se/download/curl-{{ version }}.tar.bz2
   sha256: 702fb26e73190a3bd77071aa146f507b9817cc4dfce218d2ab87f00cd3bc059d
-  patches:               # [s390x or ppc64le]
+  patches:
     - sched_s390x.patch  # [s390x or ppc64le]
 
 build:
@@ -110,9 +110,9 @@ outputs:
 
 about:
   home: https://curl.haxx.se/
-  license: curl
+  license: MIT
   license_family: MIT
-  license_file: COPYING
+  license_file: curl
   summary: tool and library for transferring data with URL syntax
 
   description: |
