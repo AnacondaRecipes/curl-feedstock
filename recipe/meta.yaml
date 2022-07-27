@@ -21,7 +21,8 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl  # [unix]
     - pkg-config  # [unix]
-    - patch
+    - patch  # [unix]
+    - m2-patch  # [win]
   host:
     - zlib
     - krb5
