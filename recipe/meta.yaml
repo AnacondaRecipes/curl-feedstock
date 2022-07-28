@@ -1,4 +1,4 @@
-{% set version = "7.83.0" %}
+{% set version = "7.84.0" %}
 
 package:
   name: curl_split_recipe
@@ -6,7 +6,9 @@ package:
 
 source:
   url: https://curl.haxx.se/download/curl-{{ version }}.tar.bz2
-  sha256: 247c7ec7521c4258e65634e529270d214fe32969971cccb72845e7aa46831f96
+  sha256: 702fb26e73190a3bd77071aa146f507b9817cc4dfce218d2ab87f00cd3bc059d
+  patches:
+    - sched_yield.patch
 
 build:
   number: 0
@@ -19,6 +21,8 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl  # [unix]
     - pkg-config  # [unix]
+    - patch  # [unix]
+    - m2-patch  # [win]
   host:
     - zlib
     - krb5
@@ -73,7 +77,7 @@ outputs:
         - openssl   # [unix]
         - libssh2
         - krb5
-        - zlib  # [ppc64le or win]
+        - zlib
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
