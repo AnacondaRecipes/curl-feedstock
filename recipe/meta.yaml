@@ -1,12 +1,12 @@
-{% set version = "7.84.0" %}
+{% set version = "7.85.0" %}
 
 package:
   name: curl_split_recipe
   version: {{ version }}
 
 source:
-  url: https://curl.haxx.se/download/curl-{{ version }}.tar.bz2
-  sha256: 702fb26e73190a3bd77071aa146f507b9817cc4dfce218d2ab87f00cd3bc059d
+  url: https://curl.se/download/curl-{{ version }}.tar.bz2
+  sha256: 21a7e83628ee96164ac2b36ff6bf99d467c7b0b621c1f7e317d8f0d96011539c
   patches:
     - sched_yield.patch
 
@@ -15,20 +15,20 @@ build:
 
 requirements:
   build:
-    - libtool  # [unix]
+    - libtool        # [unix]
     - {{ compiler('c') }}
-    - make             # [unix]
+    - make                # [unix]
     # perl is required to run the tests on UNIX.
-    - perl  # [unix]
-    - pkg-config  # [unix]
-    - patch  # [unix]
-    - m2-patch  # [win]
+    - perl           # [unix]
+    - pkg-config     # [unix]
+    - patch          # [unix]
+    - m2-patc        # [win]
   host:
-    - zlib
     - krb5
+    - libnghttp2     # [unix]
     - libssh2
     - openssl        # [unix]
-    - libnghttp2     # [unix]
+    - zlib
 
 outputs:
   - name: libcurl
@@ -36,14 +36,14 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - openssl   # [unix]
-        - libnghttp2   # [unix]
-        - zlib
-        - libssh2
         - krb5
-      run:
+        - libnghttp2  # [unix]
         - libssh2
-        - libnghttp2   # [unix]
+        - openssl     # [unix]
+        - zlib
+      run:
+        - libnghttp2  # [unix]
+        - libssh2
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
@@ -74,24 +74,24 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - openssl   # [unix]
-        - libssh2
         - krb5
+        - libssh2
+        - openssl  # [unix]
         - zlib
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
     files:
-      - lib/libcurl.a*  # [unix]
+      - lib/libcurl.a*             # [unix]
       - Library/lib/libcurl_a.lib  # [win]
     test:
       commands:
-        - test -f $PREFIX/lib/libcurl.a  # [not win]
+        - test -f $PREFIX/lib/libcurl.a                    # [not win]
         - if not exist %LIBRARY_LIB%\libcurl_a.lib exit 1  # [win]
 
   - name: curl
     files:
-      - bin/curl               # [unix]
+      - bin/curl                # [unix]
       - Library/bin/curl.exe*   # [win]
     requirements:
       build:
@@ -110,7 +110,7 @@ outputs:
         - if not exist %LIBRARY_BIN%\curl.exe exit 1  # [win]
 
 about:
-  home: https://curl.haxx.se/
+  home: https://curl.se/
   license: curl
   license_family: MIT
   license_file: COPYING
@@ -119,7 +119,7 @@ about:
   description: |
     Curl is an open source command line tool and library for transferring data
     with URL syntax. It is used in command lines or scripts to transfer data.
-  doc_url: https://curl.haxx.se/docs/
+  doc_url: https://curl.se/docs/
   dev_url: https://github.com/curl/curl
   doc_source_url: https://github.com/curl/curl/tree/master/docs
 
