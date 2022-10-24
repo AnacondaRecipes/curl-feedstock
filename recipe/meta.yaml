@@ -17,12 +17,12 @@ requirements:
   build:
     - libtool        # [unix]
     - {{ compiler('c') }}
-    - make                # [unix]
+    - make           # [unix]
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
     - patch          # [unix]
-    - m2-patc        # [win]
+    - m2-patch       # [win]
   host:
     - krb5
     - libnghttp2     # [unix]
