@@ -114,6 +114,7 @@ about:
   license: curl
   license_family: MIT
   license_file: COPYING
+  license_url: https://github.com/curl/curl/blob/master/COPYING
   summary: tool and library for transferring data with URL syntax
 
   description: |
