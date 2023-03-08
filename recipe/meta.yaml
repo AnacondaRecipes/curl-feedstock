@@ -108,8 +108,9 @@ outputs:
 about:
   home: https://curl.se/
   license: curl
-  license_family: MIT
-  license_file: COPYING
+  license_url: https://curl.se/docs/copyright.html  
+  license_family: MIT/X inspired
+  license_file: LICENSES/curl.txt
   summary: tool and library for transferring data with URL syntax
 
   description: |
