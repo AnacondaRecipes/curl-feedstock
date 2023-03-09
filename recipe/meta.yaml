@@ -1,4 +1,4 @@
-{% set version = "7.87.0" %}
+{% set version = "7.88.1" %}
 
 package:
   name: curl_split_recipe
@@ -6,9 +6,7 @@ package:
 
 source:
   url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: 5d6e128761b7110946d1276aff6f0f266f2b726f5e619f7e0a057a474155f307 
-  patches:
-    - sched_yield.patch
+  sha256: 8224b45cce12abde039c12dc0711b7ea85b104b9ad534d6e4c5b4e188a61c907
 
 build:
   number: 0
@@ -21,14 +19,12 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
-    - patch          # [unix]
-    - m2-patch       # [win]
   host:
-    - krb5
-    - libnghttp2     # [unix]
-    - libssh2
-    - openssl        # [unix]
-    - zlib
+    - krb5        1.19.4 
+    - libnghttp2  1.46.0          # [unix]
+    - libssh2     1.10.0
+    - openssl     {{ openssl }}   # [unix]
+    - zlib        {{ zlib }}
 
 outputs:
   - name: libcurl
@@ -36,14 +32,14 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5
-        - libnghttp2  # [unix]
-        - libssh2
-        - openssl     # [unix]
-        - zlib
+        - krb5        1.19.4
+        - libnghttp2  1.46.0          # [unix]
+        - libssh2     1.10.0
+        - openssl     {{ openssl }}   # [unix]
+        - zlib        {{ zlib }}
       run:
-        - libnghttp2  # [unix]
-        - libssh2
+        - libnghttp2  >=1.46.0  # [unix]
+        - libssh2     >=1.10.0
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
@@ -74,10 +70,10 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5
-        - libssh2
-        - openssl  # [unix]
-        - zlib
+        - krb5     1.19.4
+        - libssh2  1.10.0
+        - openssl  {{ openssl }}  # [unix]
+        - zlib     {{ zlib }} 
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
@@ -112,6 +108,7 @@ outputs:
 about:
   home: https://curl.se/
   license: curl
+  license_url: https://curl.se/docs/copyright.html  
   license_family: MIT
   license_file: COPYING
   summary: tool and library for transferring data with URL syntax
