@@ -110,7 +110,6 @@ about:
   license: curl
   license_url: https://curl.se/docs/copyright.html  
   license_family: MIT
-  license_file: COPYING
   summary: tool and library for transferring data with URL syntax
 
   description: |
