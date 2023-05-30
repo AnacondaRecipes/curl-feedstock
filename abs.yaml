@@ -1,0 +1,6 @@
+channels:
+  rmartins-staging: curl
+
+build_parameters:
+  - "--suppress-variables"
+  - "--error-overlinking"
