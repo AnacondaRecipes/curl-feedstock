@@ -1,4 +1,4 @@
-{% set version = "7.88.1" %}
+{% set version = "8.1.1" %}
 
 package:
   name: curl_split_recipe
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: 8224b45cce12abde039c12dc0711b7ea85b104b9ad534d6e4c5b4e188a61c907
+  sha256: 51d2af72279913b5d4cab1fe1f38b944cf70904c88bee246b5bd575844e7035a
 
 build:
   number: 0
@@ -20,7 +20,7 @@ requirements:
     - perl           # [unix]
     - pkg-config     # [unix]
   host:
-    - krb5        1.19.4 
+    - krb5        1.19.4
     - libnghttp2  1.46.0          # [unix]
     - libssh2     1.10.0
     - openssl     {{ openssl }}   # [unix]
@@ -110,7 +110,6 @@ about:
   license: curl
   license_url: https://curl.se/docs/copyright.html  
   license_family: MIT
-  license_file: COPYING
   summary: tool and library for transferring data with URL syntax
 
   description: |
