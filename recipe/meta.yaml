@@ -9,7 +9,7 @@ source:
   sha256: 8224b45cce12abde039c12dc0711b7ea85b104b9ad534d6e4c5b4e188a61c907
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -20,8 +20,8 @@ requirements:
     - perl           # [unix]
     - pkg-config     # [unix]
   host:
-    - krb5        1.19.4 
-    - libnghttp2  1.46.0          # [unix]
+    - krb5        1.20.1
+    - libnghttp2  1.52.0          # [unix]
     - libssh2     1.10.0
     - openssl     {{ openssl }}   # [unix]
     - zlib        {{ zlib }}
@@ -32,8 +32,8 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5        1.19.4
-        - libnghttp2  1.46.0          # [unix]
+        - krb5        1.20.1
+        - libnghttp2  1.52.0          # [unix]
         - libssh2     1.10.0
         - openssl     {{ openssl }}   # [unix]
         - zlib        {{ zlib }}
@@ -70,7 +70,7 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5     1.19.4
+        - krb5     1.20.1
         - libssh2  1.10.0
         - openssl  {{ openssl }}  # [unix]
         - zlib     {{ zlib }} 
