@@ -9,7 +9,7 @@ source:
   sha256: 51d2af72279913b5d4cab1fe1f38b944cf70904c88bee246b5bd575844e7035a
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -20,10 +20,10 @@ requirements:
     - perl           # [unix]
     - pkg-config     # [unix]
   host:
-    - krb5        1.19.4
-    - libnghttp2  1.46.0          # [unix]
+    - krb5        1.20.1
+    - libnghttp2  1.52.0  # [unix]
     - libssh2     1.10.0
-    - openssl     {{ openssl }}   # [unix]
+    - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
 
 outputs:
@@ -32,14 +32,15 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5        1.19.4
-        - libnghttp2  1.46.0          # [unix]
+        - krb5        1.20.1
+        - libnghttp2  1.52.0  # [unix]
         - libssh2     1.10.0
-        - openssl     {{ openssl }}   # [unix]
+        - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
       run:
-        - libnghttp2  >=1.46.0  # [unix]
+        - libnghttp2  >=1.52.0  # [unix]
         - libssh2     >=1.10.0
+        - openssl  # exact pin handled through openssl run_exports
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
@@ -70,7 +71,7 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5     1.19.4
+        - krb5     1.20.1
         - libssh2  1.10.0
         - openssl  {{ openssl }}  # [unix]
         - zlib     {{ zlib }} 
