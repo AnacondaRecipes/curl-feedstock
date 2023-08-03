@@ -9,7 +9,7 @@ source:
   sha256: 51d2af72279913b5d4cab1fe1f38b944cf70904c88bee246b5bd575844e7035a
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -90,10 +90,17 @@ outputs:
     files:
       - bin/curl                # [unix]
       - Library/bin/curl.exe*   # [win]
+    build:
+      ignore_run_exports:
+        # Ignoring the run export since we use openssl in the host section
+        # as a means to produce the right variants only. We don't need the dependency
+        # since it's already on libcurl.
+        - openssl
     requirements:
       build:
         - {{ compiler('c') }}
       host:
+        - openssl {{ openssl }} # Only required to produce all openssl variants.
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
