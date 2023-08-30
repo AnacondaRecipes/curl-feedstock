@@ -2,6 +2,12 @@
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/libtool/build-aux/config.* .
 
+test -n "${AUTORECONF}" \
+&& autoreconf \
+    --warnings=all \
+    --install \
+    --force
+
 # need macosx-version-min flags set in cflags and not cppflags
 export CFLAGS="$CFLAGS $CPPFLAGS"
 
