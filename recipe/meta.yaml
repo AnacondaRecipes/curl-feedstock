@@ -1,4 +1,4 @@
-{% set version = "8.1.1" %}
+{% set version = "8.2.1" %}
 
 package:
   name: curl_split_recipe
@@ -6,10 +6,15 @@ package:
 
 source:
   url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: 51d2af72279913b5d4cab1fe1f38b944cf70904c88bee246b5bd575844e7035a
+  sha256: 0f1e31ebe336c09ec66381f1532f8350e466e1d02ffe10c4ac44a867f1b9d343
+  patches:
+    - 8b7cbe9decc205b08ec8258eb184c89a33e3084b.patch  # [osx]
 
 build:
-  number: 2
+  number: 0
+  script_env:
+    # osx patch touches build system, we need to rebuild autotools scripts
+    - AUTORECONF=1  # [osx]
 
 requirements:
   build:
@@ -19,6 +24,9 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
+    - patch          # [osx]
+    - autoconf       # [osx]
+    - automake       # [osx]
   host:
     - krb5        1.20.1
     - libnghttp2  1.52.0  # [unix]
