@@ -1,4 +1,4 @@
-{% set version = "8.2.1" %}
+{% set version = "8.4.0" %}
 
 package:
   name: curl_split_recipe
@@ -6,15 +6,10 @@ package:
 
 source:
   url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: 0f1e31ebe336c09ec66381f1532f8350e466e1d02ffe10c4ac44a867f1b9d343
-  patches:
-    - 8b7cbe9decc205b08ec8258eb184c89a33e3084b.patch  # [osx]
+  sha256: e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
 
 build:
   number: 0
-  script_env:
-    # osx patch touches build system, we need to rebuild autotools scripts
-    - AUTORECONF=1  # [osx]
 
 requirements:
   build:
@@ -24,12 +19,9 @@ requirements:
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
-    - patch          # [osx]
-    - autoconf       # [osx]
-    - automake       # [osx]
   host:
     - krb5        1.20.1
-    - libnghttp2  1.52.0  # [unix]
+    - libnghttp2  1.57.0  # [unix]
     - libssh2     1.10.0
     - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
@@ -41,12 +33,12 @@ outputs:
         - {{ compiler('c') }}
       host:
         - krb5        1.20.1
-        - libnghttp2  1.52.0  # [unix]
+        - libnghttp2  1.57.0  # [unix]
         - libssh2     1.10.0
         - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
       run:
-        - libnghttp2  >=1.52.0  # [unix]
+        - libnghttp2  >=1.57.0  # [unix]
         - libssh2     >=1.10.0
         - openssl  # exact pin handled through openssl run_exports
     build:
@@ -82,7 +74,7 @@ outputs:
         - krb5     1.20.1
         - libssh2  1.10.0
         - openssl  {{ openssl }}  # [unix]
-        - zlib     {{ zlib }} 
+        - zlib     {{ zlib }}
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
@@ -124,7 +116,7 @@ outputs:
 about:
   home: https://curl.se/
   license: curl
-  license_url: https://curl.se/docs/copyright.html  
+  license_url: https://curl.se/docs/copyright.html
   license_family: MIT
   summary: tool and library for transferring data with URL syntax
 
