@@ -21,7 +21,7 @@ requirements:
     - pkg-config     # [unix]
   host:
     - krb5        1.20.1
-    - libnghttp2  1.52.0  # [unix]
+    - libnghttp2  1.57.0  # [unix]
     - libssh2     1.10.0
     - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
@@ -33,12 +33,12 @@ outputs:
         - {{ compiler('c') }}
       host:
         - krb5        1.20.1
-        - libnghttp2  1.52.0  # [unix]
+        - libnghttp2  1.57.0  # [unix]
         - libssh2     1.10.0
         - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
       run:
-        - libnghttp2  >=1.52.0  # [unix]
+        - libnghttp2  >=1.57.0  # [unix]
         - libssh2     >=1.10.0
         - openssl  # exact pin handled through openssl run_exports
     build:
