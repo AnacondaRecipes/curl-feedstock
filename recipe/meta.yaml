@@ -9,7 +9,7 @@ source:
   sha256: e5250581a9c032b1b6ed3cf2f9c114c811fc41881069e9892d115cc73f9e88c6
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -40,7 +40,8 @@ outputs:
       run:
         - libnghttp2  >=1.57.0  # [unix]
         - libssh2     >=1.10.0
-        - openssl  # exact pin handled through openssl run_exports
+        # exact pin handled through openssl run_exports
+        - openssl  # [unix]
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
@@ -100,7 +101,8 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - openssl {{ openssl }} # Only required to produce all openssl variants.
+        # Only required to produce all openssl variants.
+        - openssl {{ openssl }}  # [unix]
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
