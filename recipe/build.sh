@@ -25,9 +25,18 @@ export CFLAGS="$CFLAGS $CPPFLAGS"
 || cat config.log
 
 make -j${CPU_COUNT} ${VERBOSE_AT}
-# TODO :: test 1119... exit FAILED
-# make test
+
+# -v: verbose
+# -a: keep going on failure (so we see everything which breaks, not just the first failing test)
+# -k: keep test files after completion
+# -am: automake style TAP output
+# -p: print logs if test fails
+# -j: parallelization
+# disable test 433, since it requires the glibc debug info
+make TFLAGS="-v -a -k -p -j$(CPU_COUNT) !433 !1173" test-nonflaky
+
 make install
 
 # Includes man pages and other miscellaneous.
 rm -rf "${PREFIX}/share"
+
