@@ -36,8 +36,8 @@ make -j${CPU_COUNT} ${VERBOSE_AT}
 # -j: parallelization
 # disable test 433, since it requires the glibc debug info
 # disable test 1173 and 1139 since --disable-manual is set
-# disable test 971 because of locale settings on osx
-make TFLAGS="-v -a -k -p -j$(CPU_COUNT) !433 !1173 !1139 !971" test-nonflaky
+# disable test 971, 1705, and 1706 because of locale settings on osx
+make TFLAGS="-v -a -k -p -j$(CPU_COUNT) !433 !1173 !1139 !971 !1705 !1706" test-nonflaky
 
 make install
 
