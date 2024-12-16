@@ -43,9 +43,9 @@ make -j${CPU_COUNT} ${VERBOSE_AT}
 # -am: automake style TAP output
 # -p: print logs if test fails
 # -j: parallelization
-# disable test 1173 since --disable-manual is set
-make TFLAGS="-v -a -k -p -j$(CPU_COUNT) !1173" test-nonflaky
-
+# disable test 1173 and 1139 since --disable-manual is set
+# disable test 971, 1705, and 1706 because of locale settings on osx
+make TFLAGS="-v -a -k -p -j$(CPU_COUNT) !1173 !1139 !971 !1705 !1706" test-nonflaky
 make install
 
 # Includes man pages and other miscellaneous.
