@@ -22,7 +22,7 @@ requirements:
   host:
     - krb5        1.20.1
     - libnghttp2  1.57.0  # [unix]
-    - libssh2     1.10.0
+    - libssh2     1.11.1
     - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
     - zstd        {{ zstd }}  # [unix]
@@ -35,7 +35,7 @@ outputs:
       host:
         - krb5        1.20.1
         - libnghttp2  1.57.0  # [unix]
-        - libssh2     1.10.0
+        - libssh2     1.11.1
         - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
         - zstd        {{ zstd }}  # [unix]
@@ -78,7 +78,7 @@ outputs:
         - {{ compiler('c') }}
       host:
         - krb5     1.20.1
-        - libssh2  1.10.0
+        - libssh2  1.11.1
         - openssl  {{ openssl }}  # [unix]
         - zlib     {{ zlib }}
         - zstd     {{ zstd }}  # [unix]
