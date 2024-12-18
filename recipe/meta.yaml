@@ -1,4 +1,4 @@
-{% set version = "8.9.1" %}
+{% set version = "8.11.1" %}
 
 package:
   name: curl_split_recipe
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: b57285d9e18bf12a5f2309fc45244f6cf9cb14734e7454121099dd0a83d669a3
+  sha256: e9773ad1dfa21aedbfe8e1ef24c9478fa780b1b3d4f763c98dd04629b5e43485
 
 build:
   number: 0
@@ -22,9 +22,10 @@ requirements:
   host:
     - krb5        1.20.1
     - libnghttp2  1.57.0  # [unix]
-    - libssh2     1.10.0
+    - libssh2     1.11.1
     - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
+    - zstd        {{ zstd }}  # [unix]
 
 outputs:
   - name: libcurl
@@ -34,9 +35,10 @@ outputs:
       host:
         - krb5        1.20.1
         - libnghttp2  1.57.0  # [unix]
-        - libssh2     1.10.0
+        - libssh2     1.11.1
         - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
+        - zstd        {{ zstd }}  # [unix]
       run:
         - libnghttp2  >=1.57.0  # [unix]
         - libssh2     >=1.10.0
@@ -66,6 +68,9 @@ outputs:
         - if exist %LIBRARY_BIN%\curl.exe exit 1     # [win]
         - if exist %LIBRARY_LIB%\libcurl_a.lib exit 1     # [win]
         - if not exist %LIBRARY_BIN%\libcurl.dll exit 1   # [win]
+        - CURL_SSL_BACKENDS=$(curl-config --ssl-backends)                             # [unix]
+        - if ! echo $CURL_SSL_BACKENDS | grep -q "OpenSSL"; then exit 1; fi           # [unix]
+        - if ! echo $CURL_SSL_BACKENDS | grep -q "Secure Transport"; then exit 1; fi  # [osx]
 
   - name: libcurl-static
     requirements:
@@ -73,9 +78,10 @@ outputs:
         - {{ compiler('c') }}
       host:
         - krb5     1.20.1
-        - libssh2  1.10.0
+        - libssh2  1.11.1
         - openssl  {{ openssl }}  # [unix]
         - zlib     {{ zlib }}
+        - zstd     {{ zstd }}  # [unix]
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
