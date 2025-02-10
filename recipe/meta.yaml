@@ -16,6 +16,8 @@ requirements:
     - libtool        # [unix]
     - {{ compiler('c') }}
     - make           # [unix]
+    - cmake       # [win]
+    - ninja-base  # [win]
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
