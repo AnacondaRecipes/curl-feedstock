@@ -27,7 +27,7 @@ requirements:
     - libssh2     1.11.1
     - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
-    - zstd        {{ zstd }}  # [unix]
+    - zstd        {{ zstd }}
 
 outputs:
   - name: libcurl
@@ -40,7 +40,7 @@ outputs:
         - libssh2     1.11.1
         - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
-        - zstd        {{ zstd }}  # [unix]
+        - zstd        {{ zstd }}
       run:
         - libnghttp2  >=1.57.0  # [unix]
         - libssh2     >=1.10.0
@@ -83,7 +83,7 @@ outputs:
         - libssh2  1.11.1
         - openssl  {{ openssl }}  # [unix]
         - zlib     {{ zlib }}
-        - zstd     {{ zstd }}  # [unix]
+        - zstd     {{ zstd }}
         - {{ pin_subpackage('libcurl', exact=True) }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
