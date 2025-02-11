@@ -11,8 +11,7 @@ cmake -B build -G "Ninja" ^
     -DENABLE_IDN=OFF ^
     -DCURL_ENABLE_SSPI=ON ^
     -DCURL_ENABLE_UNICODE=ON ^
-    -DCURL_USE_LIBPSL=OFF ^
-    -DCMAKE_SYSTEM_PROCESSOR=%ARCH_STRING%
+    -DCURL_USE_LIBPSL=OFF 
 
 cmake --build build --config Release
 cmake --install build
