@@ -89,6 +89,7 @@ outputs:
         # Only required to produce all openssl variants.
         - openssl {{ openssl }}  # [unix]
         - {{ pin_subpackage('libcurl', exact=True) }}
+        - zlib {{ zlib }}  # [unix]
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
 
