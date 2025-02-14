@@ -9,7 +9,7 @@ source:
   sha256: 5a85adbe401ed3b998ee1128524e9b045feb39577f3c336f6997e7a4afaafcd7
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -68,6 +68,7 @@ outputs:
         - test -f ${PREFIX}/lib/libcurl${SHLIB_EXT}  # [not win]
         - if exist %LIBRARY_BIN%\curl.exe exit 1     # [win]
         - if not exist %LIBRARY_BIN%\libcurl.dll exit 1   # [win]
+        - if not exist %LIBRARY_LIB%\libcurl.lib exit 1   # [win]
         - CURL_SSL_BACKENDS=$(curl-config --ssl-backends)                             # [unix]
         - if ! echo $CURL_SSL_BACKENDS | grep -q "OpenSSL"; then exit 1; fi           # [unix]
         - if ! echo $CURL_SSL_BACKENDS | grep -q "Secure Transport"; then exit 1; fi  # [osx]

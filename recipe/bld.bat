@@ -2,6 +2,7 @@ cmake -B build -G "Ninja" ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
     -DBUILD_SHARED_LIBS=ON ^
+    -DIMPORT_LIB_SUFFIX="" ^
     -DBUILD_STATIC_LIBS=OFF ^
     -DCURL_STATICLIB=OFF ^
     -DCURL_USE_SCHANNEL=ON ^
@@ -24,8 +25,8 @@ ctest --output-on-failure -j${CPU_COUNT}
 cd ..
 
 cmake --install build
-if errorlevel 1 exit 1
 
+if errorlevel 1 exit 1
 :: Includes man pages and other miscellaneous.
 rm -rf %LIBRARY_PREFIX%\share
 exit 0
