@@ -1,4 +1,4 @@
-{% set version = "8.12.0" %}
+{% set version = "8.12.1" %}
 
 package:
   name: curl_split_recipe
@@ -6,16 +6,20 @@ package:
 
 source:
   url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: 5a85adbe401ed3b998ee1128524e9b045feb39577f3c336f6997e7a4afaafcd7
+  sha256: 18681d84e2791183e0e5e4650ccb2a080c1f3a4e57ed2fbc2457228579d68269
+  patches:  # [win]
+    # Can be removed after 8.12.1
+    - patches/000_Fix_IMPORT_LIB_SUFFIX.patch  # [win]
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
     - libtool        # [unix]
     - {{ compiler('c') }}
     - make           # [linux]
+    - m2-patch       # [win]
     - cmake
     - ninja-base  # [win]
     # perl is required to run the tests on UNIX.

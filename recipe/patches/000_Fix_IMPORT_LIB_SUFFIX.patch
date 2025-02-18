@@ -1,0 +1,70 @@
+From 1b873579671a152edca021f69bc2e4b39f8b69ad Mon Sep 17 00:00:00 2001
+From: Viktor Szakats <commit@vsz.me>
+Date: Fri, 14 Feb 2025 11:35:12 +0100
+Subject: [PATCH] cmake: allow empty custom `IMPORT_LIB_SUFFIX`, add suffix
+ collision detection
+
+Allow overriding the `IMPORT_LIB_SUFFIX` default with an empty value.
+
+Also:
+- add a fatal error if the implib and static lib filename are identical.
+- clarify `IMPORT_LIB_SUFFIX` default value in the documentation.
+
+Reported-by: RubisetCie on Github
+Fixes #16324
+Ref: 1199308dbc902c52be67fc805c72dd2582520d30 #11505
+
+Closes #16332
+---
+ docs/INSTALL-CMAKE.md |  2 +-
+ lib/CMakeLists.txt    | 23 ++++++++++++++++-------
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/docs/INSTALL-CMAKE.md b/docs/INSTALL-CMAKE.md
+index 893f4b57f..8f19c51cc 100644
+--- a/docs/INSTALL-CMAKE.md
++++ b/docs/INSTALL-CMAKE.md
+@@ -167,7 +167,7 @@ assumes that CMake generates `Makefile`:
+ - `ENABLE_CURLDEBUG`:                       Enable TrackMemory debug feature. Default: =`ENABLE_DEBUG`
+ - `ENABLE_CURL_MANUAL`:                     Build the man page for curl and enable its `-M`/`--manual` option. Default: `ON`
+ - `ENABLE_DEBUG`:                           Enable curl debug features (for developing curl itself). Default: `OFF`
+-- `IMPORT_LIB_SUFFIX`:                      Import library suffix. Default: `_imp`
++- `IMPORT_LIB_SUFFIX`:                      Import library suffix. Default: `_imp` for MSVC-like toolchains, otherwise empty.
+ - `LIBCURL_OUTPUT_NAME`:                    Basename of the curl library. Default: `libcurl`
+ - `PICKY_COMPILER`:                         Enable picky compiler options. Default: `ON`
+ - `STATIC_LIB_SUFFIX`:                      Static library suffix. Default: (empty)
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index 5f1b395f0..831cfbed9 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -69,12 +69,29 @@ endif()
+ ## Library definition
+ 
+ if(NOT DEFINED IMPORT_LIB_SUFFIX)
+-  set(IMPORT_LIB_SUFFIX "")
++  # Suffix implib name with "_imp" by default, to avoid conflicting with
++  # the generated static "libcurl.lib" (typically with MSVC).
++  if(WIN32 AND BUILD_SHARED_LIBS AND
++     CMAKE_IMPORT_LIBRARY_SUFFIX STREQUAL CMAKE_STATIC_LIBRARY_SUFFIX)
++    set(IMPORT_LIB_SUFFIX "_imp")
++  else()
++    set(IMPORT_LIB_SUFFIX "")
++  endif()
+ endif()
+ if(NOT DEFINED STATIC_LIB_SUFFIX)
+   set(STATIC_LIB_SUFFIX "")
+ endif()
+ 
++# Detect implib static lib filename collision
++if(WIN32 AND BUILD_STATIC_LIBS AND BUILD_SHARED_LIBS AND
++   "${IMPORT_LIB_SUFFIX}${CMAKE_IMPORT_LIBRARY_SUFFIX}" STREQUAL
++   "${STATIC_LIB_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
++  message(FATAL_ERROR "Library suffix is the same ('${STATIC_LIB_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}') "
++    "for the import and static '${LIBCURL_OUTPUT_NAME}' library. "
++    "Set IMPORT_LIB_SUFFIX and/or STATIC_LIB_SUFFIX to different values, "
++    "or disable building either the shared or static library to avoid the filename collision.")
++endif()
++
+ # Add "_imp" as a suffix before the extension to avoid conflicting with
+ # the statically linked "libcurl.lib" (typically with MSVC)
+ if(WIN32 AND
