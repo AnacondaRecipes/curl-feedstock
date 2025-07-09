@@ -8,9 +8,6 @@ package:
 source:
   url: https://{{ name }}.se/download/{{ name }}-{{ version }}.tar.bz2
   sha256: 5760ed3c1a6aac68793fc502114f35c3e088e8cd5c084c2d044abdf646ee48fb
-  #patches:  # [win]
-    # Can be removed after 8.12.1
-    #- patches/000_Fix_IMPORT_LIB_SUFFIX.patch  # [win]
 
 build:
   number: 0
@@ -20,7 +17,6 @@ requirements:
     - libtool        # [unix]
     - {{ compiler('c') }}
     - make           # [linux]
-    #- m2-patch       # [win]
     - cmake
     - ninja-base  # [win]
     # perl is required to run the tests on UNIX.
