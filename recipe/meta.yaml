@@ -1,15 +1,13 @@
-{% set version = "8.12.1" %}
+{% set name = "curl" %}
+{% set version = "8.14.1" %}
 
 package:
   name: curl_split_recipe
   version: {{ version }}
 
 source:
-  url: https://curl.se/download/curl-{{ version }}.tar.bz2
-  sha256: 18681d84e2791183e0e5e4650ccb2a080c1f3a4e57ed2fbc2457228579d68269
-  patches:  # [win]
-    # Can be removed after 8.12.1
-    - patches/000_Fix_IMPORT_LIB_SUFFIX.patch  # [win]
+  url: https://{{ name }}.se/download/{{ name }}-{{ version }}.tar.bz2
+  sha256: 5760ed3c1a6aac68793fc502114f35c3e088e8cd5c084c2d044abdf646ee48fb
 
 build:
   number: 0
@@ -19,16 +17,15 @@ requirements:
     - libtool        # [unix]
     - {{ compiler('c') }}
     - make           # [linux]
-    - m2-patch       # [win]
     - cmake
     - ninja-base  # [win]
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
   host:
-    - krb5        1.20.1
-    - libnghttp2  1.57.0  # [unix]
-    - libssh2     1.11.1
+    - krb5        {{ krb5 }}
+    - libnghttp2  {{ libnghttp2 }}  # [unix]
+    - libssh2     {{ libssh2 }}
     - openssl     {{ openssl }}  # [unix]
     - zlib        {{ zlib }}
     - zstd        {{ zstd }}
@@ -39,9 +36,9 @@ outputs:
       build:
         - {{ compiler('c') }}
       host:
-        - krb5        1.20.1
-        - libnghttp2  1.57.0  # [unix]
-        - libssh2     1.11.1
+        - krb5        {{ krb5 }}
+        - libnghttp2  {{ libnghttp2 }}  # [unix]
+        - libssh2     {{ libssh2 }}
         - openssl     {{ openssl }}  # [unix]
         - zlib        {{ zlib }}
         - zstd        {{ zstd }}
