@@ -10,23 +10,24 @@ source:
   sha256: 5760ed3c1a6aac68793fc502114f35c3e088e8cd5c084c2d044abdf646ee48fb
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
-    - libtool        # [unix]
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
+    - libtool        # [unix]
     - make           # [linux]
     - cmake
-    - ninja-base  # [win]
+    - ninja-base     # [win]
     # perl is required to run the tests on UNIX.
     - perl           # [unix]
     - pkg-config     # [unix]
   host:
-    - krb5        {{ krb5 }}
+    - libkrb5     {{ krb5 }}
     - libnghttp2  {{ libnghttp2 }}  # [unix]
     - libssh2     {{ libssh2 }}
-    - openssl     {{ openssl }}  # [unix]
+    - openssl     {{ openssl }}     # [unix]
     - zlib        {{ zlib }}
     - zstd        {{ zstd }}
 
@@ -34,24 +35,25 @@ outputs:
   - name: libcurl
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
       host:
-        - krb5        {{ krb5 }}
+        - libkrb5     {{ krb5 }}
         - libnghttp2  {{ libnghttp2 }}  # [unix]
         - libssh2     {{ libssh2 }}
-        - openssl     {{ openssl }}  # [unix]
+        - openssl     {{ openssl }}     # [unix]
         - zlib        {{ zlib }}
         - zstd        {{ zstd }}
       run:
-        - libnghttp2  >=1.57.0  # [unix]
+        - libnghttp2  >=1.57.0          # [unix]
         - libssh2     >=1.10.0
         # exact pin handled through openssl run_exports
         - openssl  # [unix]
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
-      ignore_run_exports:  # [win]
-        - krb5             # [win]
+      ignore_run_exports:
+        - libkrb5
     files:
       - include/curl             # [unix]
       - lib/libcurl.so*          # [linux]
@@ -86,6 +88,7 @@ outputs:
         - openssl
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
       host:
         # Only required to produce all openssl variants.
