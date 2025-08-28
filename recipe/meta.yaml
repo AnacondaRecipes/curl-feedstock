@@ -1,5 +1,5 @@
 {% set name = "curl" %}
-{% set version = "8.14.1" %}
+{% set version = "8.15.0" %}
 
 package:
   name: curl_split_recipe
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://{{ name }}.se/download/{{ name }}-{{ version }}.tar.bz2
-  sha256: 5760ed3c1a6aac68793fc502114f35c3e088e8cd5c084c2d044abdf646ee48fb
+  sha256: 699a6d2192322792c88088576cff5fe188452e6ea71e82ca74409f07ecc62563
 
 build:
   # trigger 1
@@ -47,7 +47,7 @@ outputs:
         - zstd        {{ zstd }}
       run:
         - libnghttp2  >=1.57.0          # [unix]
-        - libssh2     >=1.10.0
+        - libssh2     >=1.11.1
         # exact pin handled through openssl run_exports
         - openssl  # [unix]
     build:
@@ -108,7 +108,7 @@ outputs:
         - if not exist %LIBRARY_BIN%\curl.exe exit 1  # [win]
 
 about:
-  home: https://curl.se/
+  home: https://curl.se
   license: curl
   license_url: https://curl.se/docs/copyright.html
   license_family: MIT
@@ -117,7 +117,7 @@ about:
   description: |
     Curl is an open source command line tool and library for transferring data
     with URL syntax. It is used in command lines or scripts to transfer data.
-  doc_url: https://curl.se/docs/
+  doc_url: https://curl.se/docs
   dev_url: https://github.com/curl/curl
 
 extra:
