@@ -1,13 +1,13 @@
 {% set name = "curl" %}
-{% set version = "8.15.0" %}
+{% set version = "8.16.0" %}
 
 package:
-  name: curl_split_recipe
+  name: {{ name }}-split
   version: {{ version }}
 
 source:
   url: https://{{ name }}.se/download/{{ name }}-{{ version }}.tar.bz2
-  sha256: 699a6d2192322792c88088576cff5fe188452e6ea71e82ca74409f07ecc62563
+  sha256: 9459180ab4933b30d0778ddd71c91fe2911fab731c46e59b3f4c8385b1596c91
 
 build:
   number: 0
@@ -27,6 +27,7 @@ requirements:
     - libkrb5     {{ krb5 }}
     - libnghttp2  {{ libnghttp2 }}  # [unix]
     - libssh2     {{ libssh2 }}
+    - libidn2     {{ libidn2 }}     # [unix]
     - openssl     {{ openssl }}     # [unix]
     - zlib        {{ zlib }}
     - zstd        {{ zstd }}
@@ -41,6 +42,7 @@ outputs:
         - libkrb5     {{ krb5 }}
         - libnghttp2  {{ libnghttp2 }}  # [unix]
         - libssh2     {{ libssh2 }}
+        - libidn2     {{ libidn2 }}     # [unix]
         - openssl     {{ openssl }}     # [unix]
         - zlib        {{ zlib }}
         - zstd        {{ zstd }}
@@ -93,7 +95,7 @@ outputs:
         # Only required to produce all openssl variants.
         - openssl {{ openssl }}  # [unix]
         - {{ pin_subpackage('libcurl', exact=True) }}
-        - zlib {{ zlib }}  # [unix]
+        - zlib {{ zlib }}
       run:
         - {{ pin_subpackage('libcurl', exact=True) }}
 
@@ -111,7 +113,6 @@ about:
   license_url: https://curl.se/docs/copyright.html
   license_family: MIT
   summary: tool and library for transferring data with URL syntax
-
   description: |
     Curl is an open source command line tool and library for transferring data
     with URL syntax. It is used in command lines or scripts to transfer data.
