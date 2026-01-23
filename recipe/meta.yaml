@@ -54,8 +54,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
-      ignore_run_exports:
-        - libkrb5
     files:
       - include/curl             # [unix]
       - lib/libcurl.so*          # [linux]
