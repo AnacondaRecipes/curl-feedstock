@@ -10,7 +10,7 @@ source:
   sha256: 230032528ce5f85594d4f3eace63364c4244ccc3c801b7f8db1982722f2761f4
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -54,8 +54,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('libcurl') }}
-      ignore_run_exports:
-        - libkrb5
     files:
       - include/curl             # [unix]
       - lib/libcurl.so*          # [linux]
@@ -73,8 +71,8 @@ outputs:
         - curl-config --protocols      # [not win]
         - test -f ${PREFIX}/lib/libcurl${SHLIB_EXT}  # [not win]
         - if exist %LIBRARY_BIN%\curl.exe exit 1     # [win]
-        - if not exist %LIBRARY_BIN%\libcurl.dll exit 1   # [win]
-        - if not exist %LIBRARY_LIB%\libcurl.lib exit 1   # [win]
+        - if not exist %LIBRARY_BIN%\libcurl.dll exit 1  # [win]
+        - if not exist %LIBRARY_LIB%\libcurl.lib exit 1  # [win]
         - if not exist %LIBRARY_LIB%\pkgconfig\libcurl.pc exit 1  # [win]
         - CURL_SSL_BACKENDS=$(curl-config --ssl-backends)                             # [unix]
         - if ! echo $CURL_SSL_BACKENDS | grep -q "OpenSSL"; then exit 1; fi           # [unix]
