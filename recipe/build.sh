@@ -1,7 +1,11 @@
 #!/bin/bash
 set -ex
 
+mkdir -p build || true
+pushd build
+
 export CFLAGS="$CFLAGS $CPPFLAGS"
+export BUILD_TYPE="Release"
 
 if [[ "$target_platform" == "osx-"* ]]; then
     SSL_OPTIONS="-DCURL_USE_OPENSSL=ON -DCURL_USE_SECTRANSP=ON"
@@ -10,34 +14,30 @@ else
 fi
 
 # Configure the build with CMake
-cmake -S . -B build \
-    -DCMAKE_BUILD_TYPE=Release \
+cmake \
+    -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DCMAKE_INSTALL_PREFIX=${PREFIX} \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_STATIC_LIBS=OFF \
-    -DCURL_STATICLIB=OFF \
     -DCURL_CA_BUNDLE=${PREFIX}/ssl/cacert.pem \
     ${SSL_OPTIONS} \
     -DCURL_ZLIB=ON \
-    -DCURL_USE_SSH=ON \
+    -DCURL_USE_LIBSSH2=ON \
     -DUSE_NGHTTP2=ON \
     -DBUILD_TESTING=ON \
     -DBUILD_CURL_EXE=ON \
     -DCURL_USE_LIBPSL=OFF \
     -DCURL_DISABLE_LDAP=ON \
     -DCURL_ZSTD=ON \
-    -DCURL_GSSAPI=ON \
-    -DCURL_USE_LIBSSH2=ON
+    -DCURL_USE_GSSAPI=ON \
+    -DCURL_USE_LIBSSH2=ON \
+    ..
 
-cmake --build build --parallel ${CPU_COUNT} --verbose
+cmake --build . --config ${BUILD_TYPE} --parallel ${CPU_COUNT} --target install --verbose
 
-cd build
-ctest --output-on-failure -j${CPU_COUNT} \
-    -E "(1173|1139|971|1705|1706)"
-cd ..
+ctest -C ${BUILD_TYPE} -j "${CPU_COUNT}" --verbose --output-on-failure # -E "(1173|1139|971|1705|1706)"
 
-cmake --install build
+popd
 
 # Includes man pages and other miscellaneous.
 rm -rf "${PREFIX}/share"
-

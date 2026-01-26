@@ -1,13 +1,17 @@
-cmake -B build -G "Ninja" ^
-    -DCMAKE_BUILD_TYPE=Release ^
+mkdir -p %SRC_DIR%\build
+cd %SRC_DIR%\build
+
+set BUILD_TYPE=Release
+
+cmake -G "Ninja" ^
+    %CMAKE_ARGS% ^
+    -DCMAKE_BUILD_TYPE="%BUILD_TYPE%" ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
     -DBUILD_SHARED_LIBS=ON ^
-    -DIMPORT_LIB_SUFFIX:STRING="" ^
     -DBUILD_STATIC_LIBS=OFF ^
-    -DCURL_STATICLIB=OFF ^
     -DCURL_USE_SCHANNEL=ON ^
     -DCURL_ZLIB=ON ^
-    -DCURL_USE_SSH=ON ^
+    -DCURL_USE_LIBSSH2=ON ^
     -DUSE_NGHTTP2=ON ^
     -DBUILD_TESTING=ON ^
     -DBUILD_CURL_EXE=ON ^
@@ -16,18 +20,14 @@ cmake -B build -G "Ninja" ^
     -DENABLE_UNICODE=ON ^
     -DCURL_USE_LIBPSL=OFF ^
     -DCURL_DISABLE_LDAP=ON ^
-    -DCURL_ZSTD=ON
-
-cmake --build build --config Release
-
-cd build
-ctest --output-on-failure -j${CPU_COUNT}
-cd ..
-
-cmake --install build
-
+    -DCURL_ZSTD=ON ^
+    -DUSE_WIN32_IDN=OFF ^
+    %SRC_DIR%
 if errorlevel 1 exit 1
-:: Includes man pages and other miscellaneous.
-rm -rf %LIBRARY_PREFIX%\share
-exit 0
+
+cmake --build . --config %BUILD_TYPE% --target install --verbose
+if errorlevel 1 exit 1
+
+ctest -C %BUILD_TYPE% -j %CPU_COUNT% --output-on-failure --verbose
+if errorlevel 1 exit 1
 
