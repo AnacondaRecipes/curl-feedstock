@@ -24,6 +24,9 @@ requirements:
     #- perl           # [unix]
     - pkg-config     # [unix]
   host:
+    # TODO: please verify if libkrb5 is needed for Windows
+    # Check for overdependency errors / warnings on Windows build logs
+    # We might need 'ignore_run_exports' or 'ignore_run_exports_from' again
     - libkrb5     {{ krb5 }}
     - libnghttp2  {{ libnghttp2 }}  # [unix]
     - libssh2     {{ libssh2 }}
@@ -40,6 +43,9 @@ outputs:
         - {{ stdlib('c') }}
         - {{ compiler('c') }}
       host:
+        # TODO: please verify if libkrb5 is needed for Windows
+        # Check for overdependency errors / warnings on Windows build logs
+        # We might need 'ignore_run_exports' or 'ignore_run_exports_from' again
         - libkrb5     {{ krb5 }}
         - libnghttp2  {{ libnghttp2 }}  # [unix]
         - libssh2     {{ libssh2 }}
