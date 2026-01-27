@@ -1,5 +1,7 @@
-mkdir -p %SRC_DIR%\build
-cd %SRC_DIR%\build
+mkdir %SRC_DIR%\build
+if errorlevel 1 exit 1
+pushd %SRC_DIR%\build
+if errorlevel 1 exit 1
 
 set BUILD_TYPE=Release
 
@@ -25,4 +27,10 @@ cmake -G "Ninja" ^
 if errorlevel 1 exit 1
 
 cmake --build . --config %BUILD_TYPE% --target install --verbose
+if errorlevel 1 exit 1
+
+move %LIBRARY_LIB%\libcurl_imp.lib %LIBRARY_LIB%\libcurl.lib
+if errorlevel 1 exit 1
+
+popd
 if errorlevel 1 exit 1
