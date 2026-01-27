@@ -21,7 +21,6 @@ cmake \
     -DBUILD_STATIC_LIBS=OFF \
     -DCURL_CA_BUNDLE=${PREFIX}/ssl/cacert.pem \
     ${SSL_OPTIONS} \
-    -DCURL_ZLIB=ON \
     -DCURL_USE_LIBSSH2=ON \
     -DUSE_NGHTTP2=ON \
     -DBUILD_CURL_EXE=ON \
