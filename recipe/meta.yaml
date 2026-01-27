@@ -31,6 +31,7 @@ requirements:
     - openssl     {{ openssl }}     # [unix]
     - zlib        {{ zlib }}
     - zstd        {{ zstd }}
+    - brotli      {{ brotli }}
 
 outputs:
   - name: libcurl
@@ -46,6 +47,7 @@ outputs:
         - openssl     {{ openssl }}     # [unix]
         - zlib        {{ zlib }}
         - zstd        {{ zstd }}
+        - brotli      {{ brotli }}
       run:
         - libnghttp2  >=1.57.0          # [unix]
         - libssh2     >=1.11.1
