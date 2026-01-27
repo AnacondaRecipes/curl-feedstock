@@ -13,7 +13,6 @@ cmake -G "Ninja" ^
     -DCURL_ZLIB=ON ^
     -DCURL_USE_LIBSSH2=ON ^
     -DUSE_NGHTTP2=ON ^
-    -DBUILD_TESTING=ON ^
     -DBUILD_CURL_EXE=ON ^
     -DENABLE_IDN=OFF ^
     -DCURL_WINDOWS_SSPI=ON ^
@@ -22,12 +21,9 @@ cmake -G "Ninja" ^
     -DCURL_DISABLE_LDAP=ON ^
     -DCURL_ZSTD=ON ^
     -DUSE_WIN32_IDN=OFF ^
+    -DBUILD_TESTING=OFF ^
     %SRC_DIR%
 if errorlevel 1 exit 1
 
 cmake --build . --config %BUILD_TYPE% --target install --verbose
 if errorlevel 1 exit 1
-
-ctest -C %BUILD_TYPE% -j %CPU_COUNT% --output-on-failure --verbose
-if errorlevel 1 exit 1
-

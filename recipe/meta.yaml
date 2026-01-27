@@ -20,8 +20,8 @@ requirements:
     - make           # [linux]
     - cmake
     - ninja-base     # [win]
-    # perl is required to run the tests on UNIX.
-    - perl           # [unix]
+    # perl is required to run the tests
+    #- perl           # [unix]
     - pkg-config     # [unix]
   host:
     - libkrb5     {{ krb5 }}

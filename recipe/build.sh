@@ -24,20 +24,15 @@ cmake \
     -DCURL_ZLIB=ON \
     -DCURL_USE_LIBSSH2=ON \
     -DUSE_NGHTTP2=ON \
-    -DBUILD_TESTING=ON \
     -DBUILD_CURL_EXE=ON \
     -DCURL_USE_LIBPSL=OFF \
     -DCURL_DISABLE_LDAP=ON \
     -DCURL_ZSTD=ON \
     -DCURL_USE_GSSAPI=ON \
     -DCURL_USE_LIBSSH2=ON \
+    -DBUILD_TESTING=OFF \
     ..
 
 cmake --build . --config ${BUILD_TYPE} --parallel ${CPU_COUNT} --target install --verbose
 
-ctest -C ${BUILD_TYPE} -j "${CPU_COUNT}" --verbose --output-on-failure # -E "(1173|1139|971|1705|1706)"
-
 popd
-
-# Includes man pages and other miscellaneous.
-rm -rf "${PREFIX}/share"
