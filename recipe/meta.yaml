@@ -63,7 +63,6 @@ outputs:
       - Library/bin/libcurl.dll  # [win]
       - Library/include/curl     # [win]
       - Library/lib/libcurl.lib  # [win]
-      - Library/lib/libcurl.exp  # [win]
       - Library/lib/pkgconfig/libcurl.pc  # [win]
     test:
       commands:
