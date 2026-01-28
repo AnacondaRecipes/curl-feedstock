@@ -1,10 +1,13 @@
 #!/bin/bash
 set -ex
 
+# Create 'build' directory
 mkdir -p build || true
 pushd build
 
 export CFLAGS="$CFLAGS $CPPFLAGS"
+
+# CMake build type as a variable
 export BUILD_TYPE="Release"
 
 if [[ "$target_platform" == "osx-"* ]]; then
@@ -13,7 +16,11 @@ else
     SSL_OPTIONS="-DCURL_USE_OPENSSL=ON"
 fi
 
-# Configure the build with CMake
+# Tests;
+# The build script won't generate the CTest fixtures
+# Upstream provides a Perl script to run the tests as of v8.18.0
+
+# Configure with CMake
 cmake \
     -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DCMAKE_INSTALL_PREFIX=${PREFIX} \
@@ -31,6 +38,7 @@ cmake \
     -DCURL_USE_LIBSSH2=ON \
     ..
 
+# Build and install in a single step
 cmake --build . --config ${BUILD_TYPE} --parallel ${CPU_COUNT} --target install --verbose
 
 popd
