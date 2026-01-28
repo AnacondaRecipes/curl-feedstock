@@ -1,5 +1,5 @@
 {% set name = "curl" %}
-{% set version = "8.17.0" %}
+{% set version = "8.18.0" %}
 
 package:
   name: {{ name }}-split
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://{{ name }}.se/download/{{ name }}-{{ version }}.tar.bz2
-  sha256: 230032528ce5f85594d4f3eace63364c4244ccc3c801b7f8db1982722f2761f4
+  sha256: ffd671a3dad424fb68e113a5b9894c5d1b5e13a88c6bdf0d4af6645123b31faf
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
@@ -20,10 +20,12 @@ requirements:
     - make           # [linux]
     - cmake
     - ninja-base     # [win]
-    # perl is required to run the tests on UNIX.
-    - perl           # [unix]
+    # perl is required to run the tests
+    #- perl           # [unix]
     - pkg-config     # [unix]
   host:
+    # TODO: please verify if libkrb5 is needed for Windows
+    # If not needed, apply changes on the next major release
     - libkrb5     {{ krb5 }}
     - libnghttp2  {{ libnghttp2 }}  # [unix]
     - libssh2     {{ libssh2 }}
@@ -31,6 +33,7 @@ requirements:
     - openssl     {{ openssl }}     # [unix]
     - zlib        {{ zlib }}
     - zstd        {{ zstd }}
+    - brotli      {{ brotli }}
 
 outputs:
   - name: libcurl
@@ -39,6 +42,8 @@ outputs:
         - {{ stdlib('c') }}
         - {{ compiler('c') }}
       host:
+        # TODO: please verify if libkrb5 is needed for Windows
+        # If not needed, apply changes on the next major release
         - libkrb5     {{ krb5 }}
         - libnghttp2  {{ libnghttp2 }}  # [unix]
         - libssh2     {{ libssh2 }}
@@ -46,6 +51,7 @@ outputs:
         - openssl     {{ openssl }}     # [unix]
         - zlib        {{ zlib }}
         - zstd        {{ zstd }}
+        - brotli      {{ brotli }}
       run:
         - libnghttp2  >=1.57.0          # [unix]
         - libssh2     >=1.11.1
@@ -63,7 +69,6 @@ outputs:
       - Library/bin/libcurl.dll  # [win]
       - Library/include/curl     # [win]
       - Library/lib/libcurl.lib  # [win]
-      - Library/lib/libcurl.exp  # [win]
       - Library/lib/pkgconfig/libcurl.pc  # [win]
     test:
       commands:
@@ -101,8 +106,7 @@ outputs:
 
     test:
       commands:
-        # curl help commands on Windows have non-zero status codes.  Need other test.
-        - curl --help
+        - curl --version
         # Try downloading something from https to make sure the certs are used correctly.
         - curl https://raw.githubusercontent.com/conda-forge/curl-feedstock/master/LICENSE.txt
         - if not exist %LIBRARY_BIN%\curl.exe exit 1  # [win]
