@@ -5,6 +5,8 @@ if errorlevel 1 exit 1
 
 set BUILD_TYPE=Release
 
+@REM CURL_WINDOWS_SSPI is the Windows native equivalent of CURL_USE_GSSAPI
+@REM no libnghttp2, libidn2 on Windows
 cmake -G "Ninja" ^
     %CMAKE_ARGS% ^
     -DCMAKE_BUILD_TYPE="%BUILD_TYPE%" ^
