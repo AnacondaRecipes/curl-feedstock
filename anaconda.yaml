@@ -1,0 +1,8 @@
+anaconda_config_version: 1
+upstream_sources:
+  - webpage:
+      url: https://curl.se/download/curl-{}.tar.gz
+      regex: /download/curl-([\d.]+)\.tar\.gz
+    packages:
+      - curl
+      - libcurl
