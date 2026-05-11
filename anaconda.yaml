@@ -3,7 +3,7 @@ upstream_sources:
   - github:
       identifier: curl/curl
       use_max_tag: true
-      strip_prefix: curl-
+      prefix: curl-
       include_regex: ^curl-\d+_\d+_\d+$
       from_pattern: ^curl-(\d+)_(\d+)_(\d+)$
       to_pattern: \1.\2.\3
