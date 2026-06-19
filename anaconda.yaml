@@ -5,7 +5,7 @@ upstream_sources:
       use_max_tag: true
       prefix: curl-
       include_regex: ^curl-\d+_\d+_\d+$
-      from_pattern: ^curl-(\d+)_(\d+)_(\d+)$
+      from_pattern: ^(\d+)_(\d+)_(\d+)$
       to_pattern: \1.\2.\3
     packages:
       - curl
