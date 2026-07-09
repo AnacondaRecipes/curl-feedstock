@@ -1,5 +1,5 @@
 {% set name = "curl" %}
-{% set version = "8.20.0" %}
+{% set version = "8.21.0" %}
 
 package:
   name: {{ name }}-split
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://{{ name }}.se/download/{{ name }}-{{ version }}.tar.bz2
-  sha256: 4be48e69cf467246cb97d369b85d78a08528f2b37cffef2418ee16e6a4eb596e
+  sha256: ad6f2f94934b38e31e48272833c99b891d045b4565fe942a53fbd27bd3910e16
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
